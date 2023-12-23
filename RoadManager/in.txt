@@ -1,0 +1,9 @@
+Вулиця Петра Могили,National,1200,4,true,false
+Проспект Свободи,Regional,800,6,true,true
+Вулиця Шевченка,Local,500,2,false,false
+Бульвар Лесі Українки,National,1500,4,true,true
+Вулиця Тараса Шевченка,Local,700,2,true,false
+Вулиця Городоцька,National,1300,4,false,false
+Бульвар Івана Франка,Regional,900,4,true,true
+Вулиця Степана Бандери,Local,600,2,true,false
+Проспект Хмельницького,National,1100,4,true,true

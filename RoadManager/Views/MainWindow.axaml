@@ -1,0 +1,142 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:RoadManager.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RoadManager.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="RoadManager"
+        >
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    <Grid RowDefinitions="Auto, Auto, Auto" >
+        <Grid Grid.Row="0"  Height="30" ColumnDefinitions="Auto, Auto, Auto, *">
+            <Button Grid.Column="0" Content="File" Background="White">
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuItem Header="Open file">
+                            <Label>Enter the file name: </Label>
+                            <TextBox Text="{Binding MenuOpenFileText}"></TextBox>
+                            <Button Command="{Binding MenuOpenFile}">Open file</Button>
+                        </MenuItem>
+                        <MenuItem Header="Reset" Command="{Binding MenuResetTable}"/>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+            <Button Grid.Column="1" Content="Edit" Background="White">
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuItem Header="Add new road" Command="{Binding EditMenuAddRoad}" />
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+            <Rectangle></Rectangle>
+        </Grid>
+        <Grid Grid.Row="1" Height="50" 
+            ColumnDefinitions="Auto, Auto, Auto, Auto" 
+            Margin="15, 0, 0, 0">
+            <Button Grid.Column="0" Command="{Binding GetRoadsForTask2}">
+                2
+            </Button>
+            <Button Grid.Column="1" Command="{Binding GetRoadsForTask3}">
+                3
+            </Button>
+            <Button Grid.Column="2" Command="{Binding GetRoadTypeForTask4}">
+                4
+            </Button>
+            <Button Grid.Column="3" Command="{Binding GetRoadsForTask5}">
+                5
+            </Button>
+            <Rectangle Grid.Column="3"  />
+        </Grid>
+        <Grid Grid.Row="2" ColumnDefinitions="*, *" Margin="15, 10, 15, 0" >
+           <DataGrid Grid.Column="0" 
+                    ItemsSource="{Binding Roads}" 
+                    AutoGenerateColumns="True"
+                    IsReadOnly="True"
+                    GridLinesVisibility="All"
+                    BorderThickness="1"
+                    BorderBrush="Gray"
+                    Margin="0, 0, 10, 0">
+            </DataGrid>
+
+            <StackPanel Grid.Column="1" IsVisible ="{Binding ItemVisibility[0]}" >
+            <Grid ColumnDefinitions="2*, 4*">
+                <Label Grid.Column="0"> Name:</Label>
+                <TextBox Grid.Column="1"  Name="RoadToAddName" Text="{Binding RoadToAddName}"/>
+            </Grid>
+            <Grid ColumnDefinitions="2*, 4*">
+                <Label Grid.Column="0"> Type:</Label>
+                <ComboBox Grid.Column="1" PlaceholderText="Pick an Item" SelectedIndex="{Binding RoadToAddTypeIndex}">
+                    <ComboBoxItem >National</ComboBoxItem>
+                    <ComboBoxItem>Regional</ComboBoxItem>
+                    <ComboBoxItem>Oblast</ComboBoxItem>
+                    <ComboBoxItem>Local</ComboBoxItem>
+                </ComboBox>
+            </Grid>
+            <Grid ColumnDefinitions="2*, 4*" >
+                <Label Grid.Column="0"> Length:</Label>
+                <TextBox Grid.Column="1" Text="{Binding RoadToAddLength}" />
+            </Grid>
+            <Grid ColumnDefinitions="2*, 4*">
+                <Label Grid.Column="0"> Lane Count:</Label>
+                <TextBox Grid.Column="1" Text="{Binding RoadToAddLaneCount}" />
+            </Grid>
+            <Grid ColumnDefinitions="2*, 4*">
+                <Label Grid.Column="0"> Pavement:</Label>
+                <CheckBox Grid.Column="1" IsChecked="{Binding RoadToAddHasPavement}"/>
+            </Grid>
+            <Grid ColumnDefinitions="2*, 4*">
+                <Label Grid.Column="0"> Line:</Label>
+                <CheckBox Grid.Column="1" IsChecked="{Binding RoadToAddHasLine}"/>
+            </Grid>
+            <Grid ColumnDefinitions="*, 2*, 2*, *">
+                <Button Grid.Column="1" Command="{Binding AddRoad}">Add</Button>
+                <Button Grid.Column="2" Command="{Binding AddRoadVisibleSetFalse}">Cancel</Button>
+            </Grid>
+          </StackPanel> 
+            <DataGrid Grid.Column="1" 
+                        IsVisible ="{Binding ItemVisibility[1]}" 
+                        AutoGenerateColumns="True"
+                        GridLinesVisibility="All"
+                        BorderThickness="1"
+                        BorderBrush="Gray"
+                        ItemsSource="{Binding RequestedRoads}">
+            </DataGrid>
+            <DataGrid Grid.Column="1" 
+                        AutoGenerateColumns="True"
+                        IsVisible ="{Binding ItemVisibility[2]}" 
+                        GridLinesVisibility="All"
+                        BorderThickness="1"
+                        BorderBrush="Gray"
+                        ItemsSource="{Binding RequestedRoads}">
+            </DataGrid>
+            <StackPanel Grid.Column="1" IsVisible ="{Binding ItemVisibility[3]}" >
+                <DataGrid  
+                        AutoGenerateColumns="True"
+                        GridLinesVisibility="All"
+                        BorderThickness="1"
+                        BorderBrush="Gray"
+                        ItemsSource="{Binding RequestedRoads}">
+                </DataGrid>
+                <Label Content="Searched type is: "></Label>
+                <Label Content="{Binding RequestedRoads[0].Type}"></Label>
+            </StackPanel>
+            <DataGrid Grid.Column="1" 
+                        IsVisible ="{Binding ItemVisibility[4]}" 
+                        AutoGenerateColumns="True"
+                        GridLinesVisibility="All"
+                        BorderThickness="1"
+                        BorderBrush="Gray"
+                        ItemsSource="{Binding RequestedRoads}">
+            </DataGrid>
+        </Grid>
+    </Grid>
+
+</Window>
